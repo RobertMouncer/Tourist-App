@@ -248,7 +248,8 @@ Conference.controller = (function ($, dataContext, document) {
         // to be called.
         d.on('pageinit', $(document), initialisePage);
 
-        document.getElementById("cameraTakePicture").addEventListener("click", cameraTakePicture);
+        $('#cameraTakePicture').on('click',cameraTakePicture)
+        $('#removePicture').on('click', removePicture)
     };
 
 
@@ -261,15 +262,17 @@ Conference.controller = (function ($, dataContext, document) {
     return pub;
 }(jQuery, Conference.dataContext, document));
 
-function cameraTakePicture() { 
+function cameraTakePicture() {
+
    navigator.camera.getPicture(onSuccess, onFail, {  
       quality: 50, 
       destinationType: Camera.DestinationType.DATA_URL 
    });  
-   
-   function onSuccess(imageData) { 
-        var image = document.getElementById('myImage'); 
-        image.src = "data:image/jpeg;base64," + imageData;
+
+
+   function onSuccess(imageData) {  
+        image = "data:image/jpeg;base64,"+ imageData;
+         $("#imagePreview").append("<img src='" + image +  "'/>")
 
         var picButton = document.getElementById('cameraTakePicture') ;
         $("#cameraTakePicture").html('Take Another?');
@@ -282,6 +285,10 @@ function cameraTakePicture() {
    } 
 }
 
+function removePicture(){
+    $('div#imagePreview > img').remove();
+    alert("remove picture")
+}
 // Called when jQuery Mobile is loaded and ready to use.
 $(document).on('mobileinit', $(document), function () {
     window.onload=function(){
