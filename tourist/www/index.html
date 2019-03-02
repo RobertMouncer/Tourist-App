@@ -44,23 +44,12 @@
 <article id="home_page" role="document" aria-live="assertive" aria-atomic="true" data-role="page">
 
     <header class="page_header" role="banner" data-role="header" data-theme="b" data-position="fixed">
-        <div class="logo">
-            <img src="logo.jpg" alt="The conference home page logo"/>
+
+		<div>
+        		<h1>Record a Visit</h1>
         </div>
 
-		    <div>
-        		<h1>The Future of the Web Conference</h1>
-        </div>
-
-        <nav data-role="navbar">
-            <ul >
-                <li><a href="/">Latest Posts</a></li>
-                <li><a href="talks">Talks</a></li>
-                <li><a href="speakers">Speakers</a></li>
-                <li><a href="contact">Contact Us</a></li>
-            </ul>
-        </nav>
-
+       
     </header>
     <section data-role="content">
 	    <section id="main_text" role="main">
@@ -68,33 +57,28 @@
 	            <h2>Submit new visit</h2>
 	        </header>
 
-            
-                <div id="imagePreview">
+                <form>
+                    <label for="Title">Title</label>
+                    <input id="Title "type="text" name="Title" placeholder="Input a short description" maxlength="50">
+                    <label for="Notes">Notes</label>
+                    <input id="Notes "type="text" name="Notes" placeholder="Input any notes" maxlength="500">
+
+                </form>
+
+                <div data-role="controlgroup" data-type="horizontal" data-mini="true">
+                    <button id = "cameraTakePicture" class="ui-shadow ui-btn ui-corner-all ui-btn-icon-left ui-icon-plus ui-btn-b">Take Picture</button>
+
+                    <button id = "removePicture" class="ui-shadow ui-btn ui-corner-all ui-btn-icon-left ui-icon-delete ui-btn-b"> REMOVE PICTURE</button>
+                    <br>
+                    
                 </div>
+                
 
-                <button id = "cameraTakePicture">Take Picture</button>
-
-                <div class="hiddenDelete">
-                    <button id = "removePicture" > REMOVE PICTURE</button>
+                 <div id="imagePreview">
+                    <img id="imagePreviewImg" src="">
                 </div>
 
 	       
-	    </section>
-	
-	
-	    <section id="twitter_output" role="complementary">
-	
-	        <h4>Twitter News</h4>
-	        <a href="">@FutureWeb</a>
-	
-	        <p>Registration starts on June 9th</p>
-	
-	        <p>Don't forget to bring your
-	            toothbrush</p>
-	
-	        <p>This is a better but not perfect way to
-	            design a web site</p>
-	
 	    </section>
     </section>
     

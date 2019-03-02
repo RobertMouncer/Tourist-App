@@ -264,20 +264,25 @@ Conference.controller = (function ($, dataContext, document) {
 
 function cameraTakePicture() {
 
-   navigator.camera.getPicture(onSuccess, onFail, {  
-      quality: 50, 
-      destinationType: Camera.DestinationType.DATA_URL 
-   });  
+   // navigator.camera.getPicture(onSuccess, onFail, {  
+   //    quality: 50, 
+   //    destinationType: Camera.DestinationType.DATA_URL 
+   // });  
+   onSuccess();
 
 
-   function onSuccess(imageData) {  
-        image = "data:image/jpeg;base64,"+ imageData;
-         $("#imagePreview").append("<img src='" + image +  "'/>")
+   function onSuccess(imageData) { 
+        removePicture()
+        //image = "data:image/jpeg;base64,"+ imageData;
+        image = "easter.jpg"
+         //$("#imagePreview").append("<img src='" + image +  "'/>")
+         $('#imagePreviewImg').attr('src',image)
 
         var picButton = document.getElementById('cameraTakePicture') ;
         $("#cameraTakePicture").html('Take Another?');
 
-        document.getElementsByClassName('hiddenDelete')[0].style.display = "block";
+        //document.getElementsByClassName('hiddenDelete')[0].style.display = "block";
+        $("#removePicture")[0].style.display = "block";
    }  
    
    function onFail(message) { 
@@ -286,8 +291,11 @@ function cameraTakePicture() {
 }
 
 function removePicture(){
-    $('div#imagePreview > img').remove();
-    alert("remove picture")
+    //$('div#imagePreview > img').remove();
+    $('#imagePreviewImg').attr('src','')
+    $("#cameraTakePicture").html('Take Picture?');
+    //document.getElementsByClassName('hiddenDelete')[0].style.display = "none";
+    $("#removePicture")[0].style.display = "none";
 }
 // Called when jQuery Mobile is loaded and ready to use.
 $(document).on('mobileinit', $(document), function () {

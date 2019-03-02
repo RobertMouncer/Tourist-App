@@ -74,20 +74,6 @@ header.page_header h1 {
     filter: alpha(opacity = 70); /* <=IE8  */
 }
 
-.imagePreview  {
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.imagePreview img {
-    height: 20%;
-    max-width: 100%;
-}
-
-.hiddenDelete {
-
-    display: none;
-}
 
 
 /*
@@ -158,4 +144,16 @@ List formatting
 .session-list-item div {
     float: right;
     width: 30%;
+}
+
+
+
+#imagePreview img {
+    max-width: 100%;
+}
+
+
+#removePicture {
+
+    display: none;
 }
