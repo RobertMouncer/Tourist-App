@@ -319,7 +319,8 @@ function submitVisit(){
                 "Position": pos
             };
 
-        setItem('a', visit);
+        setItem(dateTime, visit);
+        console.log(getAllValues());
         }, function() {
     
         alert('Please enable location');
