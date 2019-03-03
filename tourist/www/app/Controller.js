@@ -218,7 +218,7 @@ Conference.controller = (function ($, dataContext, document) {
                       position.coords.longitude + '&zoom=14&size=' +
                       the_width + 'x' + the_height + '&markers=color:blue|label:S|' +
                       position.coords.latitude + ',' + position.coords.longitude +
-                      '&key=ADD YOUR API KEY HERE';
+                      '&key=AIzaSyBCFS6kPyHymErUmlY28foF2SBv90xAC-4';
          
         $('#map-img').remove();
 
@@ -300,16 +300,32 @@ function removePicture(){
 }
 
 function submitVisit(){
-    var Base64 = encodeImagetoBase64();
-    var visit = {
-        "Title": $('#Title').val(),
-        "Notes": $('#Notes').val(),
-        "image": $('#imagePreviewImg')
-     };
-     var a = setItem('a', visit);
-    
+    var base64 = encodeImagetoBase64();
+    var dateTime = new Date($.now());
 
-     
+    if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            //success
+            var pos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+
+            var visit = {
+                "Title": $('#Title').val(),
+                "Notes": $('#Notes').val(),
+                "Image": base64,
+                "DateTime": dateTime,
+                "Position": pos
+            };
+
+        setItem('a', visit);
+        }, function() {
+    
+        alert('Please enable location');
+        });
+    }
+
 }
 
 //https://stackoverflow.com/questions/40196273/convert-image-on-my-page-to-base64
@@ -326,7 +342,7 @@ function encodeImagetoBase64() {
 
     canvasContext.drawImage(img, 0, 0);
 
-    console.log(canvas.toDataURL());
+    //console.log(canvas.toDataURL());
     return canvas.toDataURL();
 
     

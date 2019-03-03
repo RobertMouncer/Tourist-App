@@ -34,14 +34,15 @@ function removeItem(key){
 
 function getAllValues(){
 	// Find the number of items in the datastore.
-	localforage.length(function(length) {
-	    // Loop over each of the items.
-	    for (var i = 0; i < length; i++) {
-	        // Get the key.
-	        localforage.key(i, function(key) {
-	            // Retrieve the data.
-	               localforage.getItem(key, handleData);
-	        });
+	localforage.keys().then(function(keys) {
+	    // An array of all the key names.
+	    console.log(keys.length);
+	    for (var i = 0; i < keys.length; i++) {
+	    	console.log(getItem(keys[i]));
 	    }
+	}).catch(function(err) {
+	    // This code runs if there were any errors
+	    console.log(err);
 	});
+
 }
