@@ -35,6 +35,8 @@
     <script src="phonegap.js" type="text/javascript"></script>
     <script src="lib/yqlgeo/yqlgeo.js"></script>
     <script src="app/DataContext.js" type="text/javascript"></script>
+    <script src="lib/lf/localforage.js" type="text/javascript"></script> 
+    <script src="app/localForageController.js" type="text/javascript"></script>
     <script src="app/Controller.js" type="text/javascript" ></script>
     <script src="lib/jqm/jquery.mobile-1.4.5.js" type="text/javascript"></script> 
 </head>
@@ -57,18 +59,20 @@
 	            <h2>Submit new visit</h2>
 	        </header>
 
-                <form>
+                
                     <label for="Title">Title</label>
-                    <input id="Title "type="text" name="Title" placeholder="Input a short description" maxlength="50">
+                    <input id="Title" type="text" name="Title" placeholder="Input a short description" maxlength="50">
                     <label for="Notes">Notes</label>
-                    <input id="Notes "type="text" name="Notes" placeholder="Input any notes" maxlength="500">
+                    <input id="Notes"type="text" name="Notes" placeholder="Input any notes" maxlength="500">
 
-                </form>
+                
 
                 <div data-role="controlgroup" data-type="horizontal" data-mini="true">
                     <button id = "cameraTakePicture" class="ui-shadow ui-btn ui-corner-all ui-btn-icon-left ui-icon-plus ui-btn-b">Take Picture</button>
 
-                    <button id = "removePicture" class="ui-shadow ui-btn ui-corner-all ui-btn-icon-left ui-icon-delete ui-btn-b"> REMOVE PICTURE</button>
+                    <button id = "removePicture" class="ui-shadow ui-btn ui-corner-all ui-btn-icon-left ui-icon-delete ui-btn-b"> REMOVE</button>
+
+                    <button id = "SubmitVisit" class="ui-shadow ui-btn ui-corner-all ui-btn-icon-left ui-icon-action ui-btn-b" onclick="submitVisit()"> Submit</button>
                     <br>
                     
                 </div>
