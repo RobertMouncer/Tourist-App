@@ -1,0 +1,1 @@
+{"name":"uk.ac.aber.dcs.rdm10.tourist","version":"1.0.0","displayName":"Tourist","cordova":{"platforms":["android"]},"dependencies":{"cordova-android":"~7.1.4"}}
