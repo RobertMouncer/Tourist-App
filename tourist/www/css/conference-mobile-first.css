@@ -133,7 +133,7 @@ List formatting
     float: left;
     margin-top: 1.25em;
     font-size: 0.8em;
-    width: 65%;
+    width: 35%;
     margin-right: 5%;
 }
 
@@ -141,10 +141,16 @@ List formatting
     font-size: 0.65em;
 }
 
+.session-list-item img {
+    float: right;
+    width: 30%;
+}
+
 .session-list-item div {
     float: right;
     width: 30%;
 }
+
 
 
 
@@ -157,3 +163,19 @@ List formatting
 
     display: none;
 }
+
+#singleVisitIMG img {
+    max-width: 100%;
+}
+
+#singleVisitNotes p, #singleVisitTitle p, #singleVisitDateTime p, #singleVisitLocation p{
+    float: left;
+    padding-left: 23px;
+    word-break: break-word;
+}
+
+#singleVisitNotes , #singleVisitTitle , #singleVisitDateTime, #singleVisitLocation{
+    float: left;
+    padding-left: 10px;
+}
+
