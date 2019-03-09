@@ -169,13 +169,18 @@ List formatting
 }
 
 #singleVisitNotes p, #singleVisitTitle p, #singleVisitDateTime p, #singleVisitLocation p{
-    float: left;
+
     padding-left: 23px;
     word-break: break-word;
 }
 
 #singleVisitNotes , #singleVisitTitle , #singleVisitDateTime, #singleVisitLocation{
-    float: left;
     padding-left: 10px;
 }
 
+
+#mapPos {
+width:100%;
+    height:100%;
+    position: absolute;
+}

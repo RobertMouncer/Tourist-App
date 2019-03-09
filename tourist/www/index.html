@@ -34,7 +34,7 @@
     <script src="lib/jq/jquery-1.12.0.min.js" type="text/javascript"></script>
     <script src="phonegap.js" type="text/javascript"></script>
     <script src="lib/yqlgeo/yqlgeo.js"></script>
-    <script src="app/DataContext.js" type="text/javascript"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBCFS6kPyHymErUmlY28foF2SBv90xAC-4"></script>
     <script src="lib/lf/localforage.js" type="text/javascript"></script> 
     <script src="app/localForageController.js" type="text/javascript"></script>
     <script src="app/Controller.js" type="text/javascript" ></script>
@@ -146,7 +146,7 @@
     </header>
     
     <section id="mapPos" role="application" data-role="content">
-        <!-- Content is dynamically added -->
+
     </section>
     
     <footer id="mapfooter" data-role="footer" data-position="fixed" data-theme="b">
@@ -177,7 +177,11 @@
     </header>
     
     <section data-role="content" class="indexPos" id="visit-content">
-        
+        <div id='visit-content-div'></div>
+        <div data-role="controlgroup" data-type="horizontal" data-mini="true">
+                    <a href="#sessions" id = "removeVisit" class="ui-shadow ui-btn ui-corner-all ui-btn-icon-left ui-icon-delete ui-btn-b"> Delete Visit</a>
+        </div>
+
     </section>
     
     <footer data-role="footer" data-position="fixed" data-theme="b">
