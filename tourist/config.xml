@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="uk.ac.aber.dcs.rdm10.tourist" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
     <name>Tourist</name>
-    <description>Browse conference sessions and discover venues</description>
+    <description>I'm a Tourist app for SEM2220 Assignment 1</description>
     <author email="rdm10@aber.ac.uk" href="http://users.aber.ac.uk/rdm10">
     Chris Loftus
   </author>
@@ -19,22 +19,24 @@
     <plugin name="cordova-plugin-network-information" source="npm" spec="~1.3.3" />
     <plugin name="cordova-plugin-vibration" source="npm" spec="~2.1.5" />
     <platform name="android">
-        <icon density="ldpi" src="www/res/icon/android/drawable-ldpi-icon.png" />
-        <icon density="mdpi" src="www/res/icon/android/drawable-mdpi-icon.png" />
-        <icon density="hdpi" src="www/res/icon/android/drawable-hdpi-icon.png" />
-        <icon density="xhdpi" src="www/res/icon/android/drawable-xhdpi-icon.png" />
-        <splash density="land-ldpi" src="www/res/screen/android/drawable-land-ldpi-screen.png" />
-        <splash density="land-mdpi" src="www/res/screen/android/drawable-land-mdpi-screen.png" />
-        <splash density="land-hdpi" src="www/res/screen/android/drawable-land-hdpi-screen.png" />
-        <splash density="land-xhdpi" src="www/res/screen/android/drawable-land-xhdpi-screen.png" />
-        <splash density="land-xxhdpi" src="www/res/screen/android/drawable-land-xxhdpi-screen.png" />
-        <splash density="land-xxxhdpi" src="www/res/screen/android/drawable-land-xxxhdpi-screen.png" />
-        <splash density="port-ldpi" src="www/res/screen/android/drawable-port-ldpi-screen.png" />
-        <splash density="port-mdpi" src="www/res/screen/android/drawable-port-mdpi-screen.png" />
-        <splash density="port-hdpi" src="www/res/screen/android/drawable-port-hdpi-screen.png" />
-        <splash density="port-xhdpi" src="www/res/screen/android/drawable-port-xhdpi-screen.png" />
-        <splash density="port-xxhdpi" src="www/res/screen/android/drawable-port-xxhdpi-screen.png" />
-        <splash density="port-xxxhdpi" src="www/res/screen/android/drawable-port-xxxhdpi-screen.png" />
+        <icon qualifier="ldpi" src="res/icons/android/drawable-ldpi-icon.png" />
+        <icon qualifier="mdpi" src="res/icons/android/drawable-mdpi-icon.png" />
+        <icon qualifier="hdpi" src="res/icons/android/drawable-hdpi-icon.png" />
+        <icon qualifier="xhdpi" src="res/icons/android/drawable-xhdpi-icon.png" />
+        <icon qualifier="xxhdpi" src="res/icons/android/drawable-xxhdpi-icon.png" />
+        <icon qualifier="xxxhdpi" src="res/icons/android/drawable-xxxhdpi-icon.png" />
+        <splash qualifier="land-ldpi" src="res/screens/android/drawable-land-ldpi-screen.png" />
+        <splash qualifier="land-mdpi" src="res/screens/android/drawable-land-mdpi-screen.png" />
+        <splash qualifier="land-hdpi" src="res/screens/android/drawable-land-hdpi-screen.png" />
+        <splash qualifier="land-xhdpi" src="res/screens/android/drawable-land-xhdpi-screen.png" />
+        <splash qualifier="land-xxhdpi" src="res/screens/android/drawable-land-xxhdpi-screen.png" />
+        <splash qualifier="land-xxxhdpi" src="res/screens/android/drawable-land-xxxhdpi-screen.png" />
+        <splash qualifier="port-ldpi" src="res/screens/android/drawable-port-ldpi-screen.png" />
+        <splash qualifier="port-mdpi" src="res/screens/android/drawable-port-mdpi-screen.png" />
+        <splash qualifier="port-hdpi" src="res/screens/android/drawable-port-hdpi-screen.png" />
+        <splash qualifier="port-xhdpi" src="res/screens/android/drawable-port-xhdpi-screen.png" />
+        <splash qualifier="port-xxhdpi" src="res/screens/android/drawable-port-xxhdpi-screen.png" />
+        <splash qualifier="port-xxxhdpi" src="res/screens/android/drawable-port-xxxhdpi-screen.png" />
     </platform>
     <access origin="*" />
     <access origin="http://*.phonegap.com" subdomains="true" />
@@ -55,4 +57,5 @@
     <plugin name="cordova-plugin-camera" spec="~2.4.1" />
     <engine name="android" spec="~7.1.4" />
     <plugin name="cordova-plugin-sqlite-2" spec="~1.0.6" />
+    <plugin name="cordova-plugin-splashscreen" spec="~5.0.2" />
 </widget>

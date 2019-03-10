@@ -42,6 +42,9 @@
     },
     "cordova-plugin-sqlite-2": {
       "PACKAGE_NAME": "uk.ac.aber.dcs.rdm10.tourist"
+    },
+    "cordova-plugin-splashscreen": {
+      "PACKAGE_NAME": "uk.ac.aber.dcs.rdm10.tourist"
     }
   },
   "dependent_plugins": {
