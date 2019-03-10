@@ -7,6 +7,7 @@ Conference.controller = (function ($, document) {
     var visitSelector = "#visit-content-div"
     var noSessionsCachedMsg = "<div>Your sessions list is empty.</div>";
     var map;
+    var markers = [];
     var API_KEY = 'AIzaSyBCFS6kPyHymErUmlY28foF2SBv90xAC-4';
 
     var SESSIONS_LIST_PAGE_ID = "sessions",
@@ -120,7 +121,7 @@ Conference.controller = (function ($, document) {
         + "</span>"
         + "</a>"
         + "</li>");
-
+       
 
    }).then(function() {
     localforage.length().then(function(numberOfKeys) {
@@ -131,16 +132,15 @@ Conference.controller = (function ($, document) {
         $(noSessionsCachedMsg).appendTo(view);
         return;
     }
-    console.log($.active)
+
     var listItems = liArray.join("");
     $(listItems).appendTo(ul);
     ul.listview();
-    console.log('Iteration has completed');
+    
 })
 
 }).catch(function(err) {
     // This code runs if there were any errors
-    console.log(err);
 });
 
 
@@ -206,17 +206,57 @@ var initiateMap = function () {
 
     var handle_geolocation_query = function (position) {
         var pos = {lat: position.coords.latitude, lng: position.coords.longitude};
-        console.log(pos)
         map = new google.maps.Map(document.getElementById('mapPos'), {zoom: 15, center: pos});
         var infoWindow = new google.maps.InfoWindow;
         infoWindow.setPosition(pos);
         infoWindow.setContent('Estimated location.');
         infoWindow.open(map);
 
-        //add markers
+            for (var i = 0; i < markers.length; i++) {
+                 markers[i].setMap(null);
+            }
+
+            markers.length = 0;
+
+
+        localforage.iterate(function(value, key, iterationNumber) {
+            var content = "<div><h1>" + value.Title + "</h1></div>";
+
+            if(value.Notes != ''){
+                    content = content + "<div><h2>" + value.Notes +"</h2></div>";
+                }
+
+            if(value.Image != ''){
+                    content = content + "<img src='" + value.Image + "'height='42' width='42'>";
+                }
+                            
+            var infowindowForMarker = new google.maps.InfoWindow({
+                    content: content
+                });
+
+
+            var marker = new google.maps.Marker({
+
+                                position: value.LatLng,
+                                map: map,
+                                title: value.Title
+
+                            });
+
+            marker.addListener('click', function() {
+                infowindowForMarker.open(map, marker);
+            });
+
+            markers.push(marker);
+        });
+
+        
+        
+
     };
 
     var init = function () {
+        $.mobile.ajaxEnabled = false;
         // The pagechange event is fired every time we switch pages or display a page
         // for the first time.
         var d = $(document);
@@ -237,7 +277,7 @@ var initiateMap = function () {
     };
 
     function removeVisit(){
-        console.log(window.location.href);
+        
         var visitId = window.location.href.split('visitId=')[1];
         localforage.key(visitId-1).then(function (key) {
             localforage.removeItem(key).then(function(value) {
@@ -302,6 +342,14 @@ function removePicture(){
 }
 
 function submitVisit(){
+    if($('#Title').val() == ''){
+        $('#TitleLabel').text('***PLEASE ENTER A TITLE***')
+        $("#TitleLabel").css("color", 'red');
+        return;
+    }
+
+
+
     var base64 = $('#imagePreviewImg').attr('src');
 
     var dateTime = new Date($.now());
@@ -313,11 +361,9 @@ function submitVisit(){
               lng: position.coords.longitude
           };
 
-          console.log(pos.lat + ',' + pos.lng);
-
           $.get('https://maps.googleapis.com/maps/api/geocode/json?latlng=' 
             + pos.lat + ',' + pos.lng + '&key=AIzaSyBCFS6kPyHymErUmlY28foF2SBv90xAC-4',function( data ) {
-                console.log(data);
+
                 var address = data.results[1].formatted_address;
                 var visit = {
                     "Title": $('#Title').val(),

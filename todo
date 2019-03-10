@@ -1,8 +1,6 @@
 
 __TODO__
-add markers
-Create custom markers in same iterate func
-opt - add gallery func
+
 empty form
 
 __FLAIR__
@@ -12,3 +10,4 @@ Geocode reverse
 icon + splash screen
 custom markers
 localForage
+add gallery func
