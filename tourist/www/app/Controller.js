@@ -336,7 +336,7 @@ function cameraTakePicture() {
 function removePicture(){
     //$('div#imagePreview > img').remove();
     $('#imagePreviewImg').attr('src','')
-    $("#cameraTakePicture").html('Take Picture?');
+    $("#cameraTakePicture").html('Take Picture');
     //document.getElementsByClassName('hiddenDelete')[0].style.display = "none";
     $("#removePicture")[0].style.display = "none";
 }
@@ -374,7 +374,11 @@ function submitVisit(){
                     "LatLng" : pos
                 };
 
-                localforage.setItem(dateTime.toString(), visit).catch(function (err) {
+                localforage.setItem(dateTime.toString(), visit).then(function(){
+                        $('#Title').val('');
+                        $('#Notes').val('');
+                        removePicture();
+                }).catch(function (err) {
                     // we got an error
                     alert('Error saving item: ' + err)
                 });
