@@ -7,7 +7,7 @@
     <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     
-    <title>Using PhoneGap with jQuery Mobile</title>
+    <title>I'm a Tourist!</title>
     <!-- See http://code.google.com/p/html5shiv/ 
     HTML5shiv is a library to enable all new HTML5 elements and sectioning in IE 8 and earlier -->
     <!--[if lt IE 9]>
@@ -18,10 +18,7 @@
     
     <!-- Include basic structural CSS first, that is mobile focused -->
     <link rel="stylesheet" type="text/css" href="css/conference-mobile-first.css"/>
-    <link rel="stylesheet" type="text/css" href="css/conference-mid-size-screens.css"
-          media="all and (min-width: 527px) and (max-width: 684px)"/>
-    <link rel="stylesheet" type="text/css" href="css/conference-large-screens.css"
-          media="all and (min-width: 685px)"/>
+
           
     <!-- Deal with IE 8 and earlier, which don't support media queries. Unfortunately,
          there is nothing in these IE conditionals that allow us to also test for
@@ -62,7 +59,7 @@
                     <label id = 'TitleLabel' for="Title">Title (Required)</label>
                     <input id="Title" type="text" name="Title" placeholder="Input a short description" maxlength="50">
                     <label for="Notes">Notes</label>
-                    <input id="Notes"type="text" name="Notes" placeholder="Input any notes" maxlength="500">
+                    <textarea id="Notes"type="text" name="Notes" placeholder="Input any notes" maxlength="500"></textarea>
 
                 
 
