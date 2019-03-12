@@ -129,7 +129,7 @@ aside {
 /*
 List formatting
 */
-.session-list-item h3 {
+.visit-list-item h3 {
     float: left;
     margin-top: 1.25em;
     font-size: 0.8em;
@@ -137,16 +137,16 @@ List formatting
     margin-right: 5%;
 }
 
-.session-list-item h6 {
+.visit-list-item h6 {
     font-size: 0.65em;
 }
 
-.session-list-item img {
+.visit-list-item img {
     float: right;
     width: 30%;
 }
 
-.session-list-item div {
+.visit-list-item div {
     float: right;
     width: 30%;
 }
@@ -185,6 +185,6 @@ width:100%;
     position: absolute;
 }
 
-#visit-content-div img, #sessions-list-content img  {
+#visit-content-div img, #visits-list-content img  {
     max-width: 100%;
 }

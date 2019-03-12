@@ -1,16 +1,21 @@
+//A portion of this file is adapted from the contorller provided by Chris Loftus for the Assignment.
+
+
 var Conference = Conference || {};
 
 Conference.controller = (function ($, document) {
     "use strict";
 
-    var sessionsListSelector = "#sessions-list-content";
+    var visitListSelector = "#visits-list-content";
     var visitSelector = "#visit-content-div"
-    var noSessionsCachedMsg = "<div>Your sessions list is empty.</div>";
+    var noVisitsCachedMsg = "<div>Your Visits list is empty.</div>";
     var map;
+    //keep track of the markers displayed on the map
     var markers = [];
+    //API key used for Gmaps
     var API_KEY = 'AIzaSyBCFS6kPyHymErUmlY28foF2SBv90xAC-4';
 
-    var SESSIONS_LIST_PAGE_ID = "sessions",
+    var VISITS_LIST_PAGE_ID = "visits",
     MAP_PAGE = "map",
     SINGLE_VISIT = "singleVisit";
 
@@ -35,33 +40,51 @@ Conference.controller = (function ($, document) {
         // displayed and window dimensions changed then redisplay
         // with new dimensions
         switch (toPageId) {
-            case SESSIONS_LIST_PAGE_ID:
-                getAndRenderVisits();
-                break;
+            case VISITS_LIST_PAGE_ID:
+            getAndRenderVisits();
+            break;
             case SINGLE_VISIT:
-                getAndRenderSingleVisit();
-                break;
+            getAndRenderSingleVisit();
+            break;
             case MAP_PAGE:
-                initiateMap();
-                break;
+            initiateMap();
+            break;
         }
     };
 
-
+    //function provided by Chris Loftus - adapted to needs.
+    var change_page_back_history = function () {
+        $('a[data-role="tab"]').each(function () {
+            var anchor = $(this);
+        //added the if statement to prevent js crash when clicking on the same tab twice.
+        if (anchor.attr('href') !== undefined) {
+            anchor.bind("click", function () {
+                $.mobile.changePage(anchor.attr("href"), { // Go to the URL
+                    transition: "none",
+                    changeHash: false
+                });
+                return false;
+            });
+        }
+    });
+    };
+    //function used to render a single visit.
     var getAndRenderSingleVisit = function(){
-
+        //get view and empty it
         var view = $(visitSelector);
         view.empty();
 
-
+        //set up all the div takes and headings
         var Title = $("<div id='singleVisitTitle'><h1>Title:</h1></div>");
         var Notes = $("<div id='singleVisitNotes'><h2>Notes:</h2></div>");
         var DateTime = $("<div id='singleVisitDateTime'><h2>When?:</h2></div>");
         var Image = $("<div id='singleVisitIMG'><img id='singleVisitIMGPreview'></div>");
         var Location = $("<div id='singleVisitLocation'><h2>Where?:</h2></div>");
 
+        //get the id of the visit from the URL
         var visitId = window.location.href.split('visitId=')[1];
-
+        //get the key and then get the key.
+        //Create the view if the contents are not empty
         localforage.key(visitId-1).then(function (key) {
             localforage.getItem(key).then(function(value) {
                 if(value.Title != ''){
@@ -87,16 +110,16 @@ Conference.controller = (function ($, document) {
         });
 
     }
-
+    //render the list of visits shown on the visits tab
+    //based on fucntion created by Chris Loftus
     var getAndRenderVisits = function(){
-        var view = $(sessionsListSelector);
+        //get and empty the view
+        var view = $(visitListSelector);
 
         view.empty();
 
         var liArray = [],
-        listItem,
-        session,
-        i;
+        listItem;
 
         var filterForm = $("<form class=\"ui-filterable\">");
         var inputField = $("<input id=\"myFilter\" data-type=\"search\" placeholder=\"Search for visits...\">");
@@ -104,7 +127,7 @@ Conference.controller = (function ($, document) {
         filterForm.appendTo(view);
 
         var ul = $("<ul id=\"visit-list\" data-role=\"listview\" data-filter=\"true\" data-input=\"#myFilter\"></ul>").appendTo(view);
-
+        //iterate over the visits stored and create a list.
         localforage.iterate(function(value, key, iterationNumber) {
 
             listItem = "<li>";
@@ -113,7 +136,7 @@ Conference.controller = (function ($, document) {
 
        //add to front of array so it loads in date order
        liArray.unshift(listItem
-        + "<span class='session-list-item'>"
+        + "<span class='visit-list-item'>"
         + "<h3>" + value.Title + "</h3>"
         + "<img id='visit-img' src ='"+ value.Image +"'>"
         + "<div>"
@@ -128,13 +151,14 @@ Conference.controller = (function ($, document) {
    }).then(function() {
     localforage.length().then(function(numberOfKeys) {
     // Outputs the length of the database.
+    //if there are no keys then clear the view and show a message stating there are no visits
     if(numberOfKeys === 0){
         view.empty()
 
-        $(noSessionsCachedMsg).appendTo(view);
+        $(noVisitsCachedMsg).appendTo(view);
         return;
     }
-
+    //join list into view. 
     var listItems = liArray.join("");
     $(listItems).appendTo(ul);
     ul.listview();
@@ -143,37 +167,31 @@ Conference.controller = (function ($, document) {
 
 }).catch(function(err) {
     // This code runs if there were any errors
+    alert(err)
 });
 
 
 }
 
-//function provided by Chris Loftus - adapted to needs.
-var noDataDisplay = function (event, data) {
-    var view = $(sessionsListSelector);
-    view.empty();
-    $(databaseNotInitialisedMsg).appendTo(view);
-}
-
-//function provided by Chris Loftus - adapted to needs.
-var change_page_back_history = function () {
-    $('a[data-role="tab"]').each(function () {
-        var anchor = $(this);
-        if (anchor.attr('href') !== undefined) {
-            anchor.bind("click", function () {
-                $.mobile.changePage(anchor.attr("href"), { // Go to the URL
-                    transition: "none",
-                    changeHash: false
-                });
-                return false;
+    //function to delete the visit from storage
+    function removeVisit(){
+        //get the visit id from the url
+        var visitId = window.location.href.split('visitId=')[1];
+        //get the key and remove it 
+        localforage.key(visitId-1).then(function (key) {
+            localforage.removeItem(key).then(function(value) {
+                console.log('Key is cleared!');
+            }).catch(function(err) {
+                // This code runs if there were any errors
+                console.log(err);
             });
-        }
-    });
-};
+        });
+
+    }
 
 //function provided by Chris Loftus - adapted to needs.
 var initiateMap = function () {
-
+    //removed function to check if a phonegap app. Not needed as this will be deployed as phonegap.
         // Do we have built-in support for geolocation (either native browser or phonegap)?
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(handle_geolocation_query, handle_errors);
@@ -205,50 +223,53 @@ var initiateMap = function () {
         }
     };
 
-
+    //used to provide functionality to the map and set up markers
     var handle_geolocation_query = function (position) {
+        //position of user
         var pos = {lat: position.coords.latitude, lng: position.coords.longitude};
+        //center the map to where the user is.
         map = new google.maps.Map(document.getElementById('mapPos'), {zoom: 15, center: pos});
+        //add an information window showing where the estimated location of the user is
         var infoWindow = new google.maps.InfoWindow;
         infoWindow.setPosition(pos);
         infoWindow.setContent('Estimated location.');
         infoWindow.open(map);
+        //remove markers and empty array incase any other visits have been added
+        for (var i = 0; i < markers.length; i++) {
+         markers[i].setMap(null);
+     }
 
-            for (var i = 0; i < markers.length; i++) {
-                 markers[i].setMap(null);
-            }
+     markers.length = 0;
 
-            markers.length = 0;
-
-
+        //iteration over the visits and create information windows for them when the marker is clicked.    
         localforage.iterate(function(value, key, iterationNumber) {
             var content = "<div><h1>" + value.Title + "</h1></div>";
 
             if(value.Notes != ''){
-                    content = content + "<div><h2>" + value.Notes +"</h2></div>";
-                }
+                content = content + "<div><h2>" + value.Notes +"</h2></div>";
+            }
 
             if(value.Image != ''){
-                    content = content + "<img src='" + value.Image + "'height='' width='200'>";
-                }
-                            
+                content = content + "<img src='" + value.Image + "'height='' width='200'>";
+            }
+
             var infowindowForMarker = new google.maps.InfoWindow({
-                    content: content
-                });
+                content: content
+            });
 
-
+            //create marker
             var marker = new google.maps.Marker({
 
-                                position: value.LatLng,
-                                map: map,
-                                title: value.Title
+                position: value.LatLng,
+                map: map,
+                title: value.Title
 
-                            });
-
+            });
+            //add listener to the marker
             marker.addListener('click', function() {
                 infowindowForMarker.open(map, marker);
             });
-
+            //add marker to the markers array
             markers.push(marker);
         });
 
@@ -258,7 +279,6 @@ var initiateMap = function () {
     };
 
     var init = function () {
-        $.mobile.ajaxEnabled = false;
         // The pagechange event is fired every time we switch pages or display a page
         // for the first time.
         var d = $(document);
@@ -270,27 +290,16 @@ var initiateMap = function () {
         // Document Object Model (DOM). When this happens we want the initialisePage function
         // to be called.
         d.on('pageinit', $(document), initialisePage);
-
+        //if the user would like to take a picture, the function is called on button click
         $('#cameraTakePicture').on('click',cameraTakePicture);
+        //if the user would like to use a picture from the gallery, the function is called on button click
         $('#galleryPicture').on('click',galleryPicture);
+        //if the user would like to remove the image selected/taken, the function is called on button click
         $('#removePicture').on('click', removePicture);
+        //if the user decides to remove the visit from the visit list, the function is called on button click
         $('#removeVisit').on('click', removeVisit);
 
     };
-
-    function removeVisit(){
-        
-        var visitId = window.location.href.split('visitId=')[1];
-        localforage.key(visitId-1).then(function (key) {
-            localforage.removeItem(key).then(function(value) {
-                console.log('Key is cleared!');
-            }).catch(function(err) {
-                // This code runs if there were any errors
-                console.log(err);
-            });
-        });
-
-    }
 
     // Provides an object wrapper for the "public" functions that we return to external code so that they
     // know which functions they can call. In this case just init.
@@ -301,71 +310,82 @@ var initiateMap = function () {
     return pub;
 }(jQuery, document));
 
+//function used if a gallery picture is required
 function galleryPicture() {
+        //DATA_URL returns the image in a base64 format
+        //if correct orientation isn't used, the image would be displayed at a 90 degree angle
+        //low quality to save storage
         navigator.camera.getPicture(onSuccess, onFail, {  
             quality: 10, 
             destinationType: Camera.DestinationType.DATA_URL,
             sourceType: Camera.PictureSourceType.SAVEDPHOTOALBUM,
             correctOrientation: true
-            }); 
-}
+        }); 
+    }
+//function used if a camera picture is required
 function cameraTakePicture() {
-
-     navigator.camera.getPicture(onSuccess, onFail, {  
+        //DATA_URL returns the image in a base64 format
+         //low quality to save storage
+         navigator.camera.getPicture(onSuccess, onFail, {  
             quality: 10, 
             destinationType: Camera.DestinationType.DATA_URL 
-            }); 
-}
-   function onSuccess(imageData) { 
+        }); 
+     }
+     //if camera/gallery was a success, complete this function
+     function onSuccess(imageData) { 
+        //remove pic that might be already displayed
         removePicture()
+        //add image type to string
         image = "data:image/jpeg;base64,"+ imageData;
-
-         $('#imagePreviewImg').attr('src',image)
-
-         var picButton = document.getElementById('cameraTakePicture') ;
-         $("#cameraTakePicture").html('Take Another?');
+        //show image
+        $('#imagePreviewImg').attr('src',image)
+        //update buttons
+        $("#cameraTakePicture").html('Take Another?');
 
         //document.getElementsByClassName('hiddenDelete')[0].style.display = "block";
         $("#removePicture")[0].style.display = "block";
     }  
-
+    //if camera/gallery fails, show why
     function onFail(message) { 
       alert('Failed because: ' + message); 
   } 
 
 
-function removePicture(){
-    //$('div#imagePreview > img').remove();
-    $('#imagePreviewImg').attr('src','')
+  function removePicture(){
+    //remove picture that has been taken/selected
+    $('#imagePreviewImg').attr('src','');
+    //replace button text
     $("#cameraTakePicture").html('Take Picture');
-    //document.getElementsByClassName('hiddenDelete')[0].style.display = "none";
+    //hide the remove picture button
     $("#removePicture")[0].style.display = "none";
 }
 
+//when a visit is submitted this function is called
 function submitVisit(){
+    //if no title is present, request user to enter one.
     if($('#Title').val() == ''){
         $('#TitleLabel').text('***PLEASE ENTER A TITLE***')
         $("#TitleLabel").css("color", 'red');
         return;
     }
-
-
-
+    //get image in base64 format
     var base64 = $('#imagePreviewImg').attr('src');
 
     var dateTime = new Date($.now());
+    //
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function(position) {
-            //success
+            //successfully got position
             var pos = {
               lat: position.coords.latitude,
               lng: position.coords.longitude
           };
-
+          //reverse geocode posiiton for display in list view
           $.get('https://maps.googleapis.com/maps/api/geocode/json?latlng=' 
             + pos.lat + ',' + pos.lng + '&key=AIzaSyBCFS6kPyHymErUmlY28foF2SBv90xAC-4',function( data ) {
 
                 var address = data.results[1].formatted_address;
+                //create object 
                 var visit = {
                     "Title": $('#Title').val(),
                     "Notes": $('#Notes').val(),
@@ -374,11 +394,14 @@ function submitVisit(){
                     "Position": address,
                     "LatLng" : pos
                 };
-
+                //store item with datetime as key. 
                 localforage.setItem(dateTime.toString(), visit).then(function(){
-                        $('#Title').val('');
-                        $('#Notes').val('');
-                        removePicture();
+                    //empty form 
+                    $('#Title').val('');
+                    $('#Notes').val('');
+                    removePicture();
+                    $('#TitleLabel').text('Title (Required)')
+                    $("#TitleLabel").css("color", '');
                 }).catch(function (err) {
                     // we got an error
                     alert('Error saving item: ' + err)
